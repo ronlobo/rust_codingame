@@ -7,14 +7,18 @@ use marslander::lander::{Lander, FlyState, ControlCmd};
 
 // A list of possible lander commands to reduce the search space
 const COMMAND_SIZE: usize = 9;
-const AVAILABLE_COMMANDS: [(i32, i32); COMMAND_SIZE] = [(-15, -1), (-15, 0), (-15, 1), (0, -1), (0, 0), (0, 1), (15, -1), (15, 0), (15, 1)];
+const AVAILABLE_COMMANDS: [(i32, i32); COMMAND_SIZE] = [
+    (-15, -1), (-15, 0), (-15, 1),
+    (0, -1), (0, 0), (0, 1),
+    (15, -1), (15, 0), (15, 1)
+];
 
 fn main() {
     let timer = Instant::now();
     let best_population: LanderWithGenomeAndResult = find_best_population(
         &|genome: &Genome| lander_from_genome(&genome),
         &|lander: &Lander| calculate_lander_fitness(&lander),
-    ) as LanderWithGenomeAndResult;
+    );
     let duration = timer.elapsed();
 
     let best_population_result = best_population.result();
